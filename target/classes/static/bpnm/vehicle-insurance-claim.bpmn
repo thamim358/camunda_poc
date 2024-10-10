@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                  xmlns:camunda="http://camunda.org/schema/1.0/bpmn"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  id="Definitions_1" 
+                  targetNamespace="http://bpmn.io/schema/bpmn">
+
+  <bpmn:process id="vehicleInsuranceProcess" name="Vehicle Insurance Claim" isExecutable="true">
+    
+    <bpmn:startEvent id="StartEvent_1" name="Claim Submission">
+      <bpmn:outgoing>Flow_1</bpmn:outgoing>
+    </bpmn:startEvent>
+    
+    <bpmn:sequenceFlow id="Flow_1" sourceRef="StartEvent_1" targetRef="Task_ClaimValidation" />
+    
+    <bpmn:serviceTask id="Task_ClaimValidation" name="Claim Validation" camunda:delegateExpression="${claimValidation}">
+      <bpmn:incoming>Flow_1</bpmn:incoming>
+      <bpmn:outgoing>Flow_2</bpmn:outgoing>
+    </bpmn:serviceTask>
+    
+    <bpmn:sequenceFlow id="Flow_2" sourceRef="Task_ClaimValidation" targetRef="Gateway_ValidClaim" />
+    
+    <bpmn:exclusiveGateway id="Gateway_ValidClaim" name="Is Claim Valid?">
+      <bpmn:incoming>Flow_2</bpmn:incoming>
+      <bpmn:outgoing>Flow_Valid</bpmn:outgoing>
+      <bpmn:outgoing>Flow_Invalid</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    
+    <bpmn:sequenceFlow id="Flow_Valid" name="Valid" sourceRef="Gateway_ValidClaim" targetRef="Task_AssignAdjuster">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${isClaimValid == true}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    
+    <bpmn:sequenceFlow id="Flow_Invalid" name="Invalid" sourceRef="Gateway_ValidClaim" targetRef="Task_RejectClaim">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${isClaimValid == false}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    
+    <bpmn:userTask id="Task_AssignAdjuster" name="Assign Adjuster" camunda:assignee="adjuster">
+      <bpmn:incoming>Flow_Valid</bpmn:incoming>
+      <bpmn:outgoing>Flow_3</bpmn:outgoing>
+    </bpmn:userTask>
+    
+    <bpmn:sequenceFlow id="Flow_3" sourceRef="Task_AssignAdjuster" targetRef="Task_DamageAssessment" />
+    
+    <bpmn:serviceTask id="Task_DamageAssessment" name="Damage Assessment" camunda:delegateExpression="${damageAssessment}">
+      <bpmn:incoming>Flow_3</bpmn:incoming>
+      <bpmn:outgoing>Flow_4</bpmn:outgoing>
+    </bpmn:serviceTask>
+    
+    <bpmn:sequenceFlow id="Flow_4" sourceRef="Task_DamageAssessment" targetRef="Task_ClaimApproval" />
+    
+    <bpmn:userTask id="Task_ClaimApproval" name="Claim Approval" camunda:assignee="approver">
+      <bpmn:incoming>Flow_4</bpmn:incoming>
+      <bpmn:outgoing>Flow_5</bpmn:outgoing>
+    </bpmn:userTask>
+    
+    <bpmn:sequenceFlow id="Flow_5" sourceRef="Task_ClaimApproval" targetRef="Task_ProcessPayment" />
+    
+    <bpmn:serviceTask id="Task_ProcessPayment" name="Payment Processing" camunda:delegateExpression="${paymentProcessing}">
+      <bpmn:incoming>Flow_5</bpmn:incoming>
+      <bpmn:outgoing>Flow_6</bpmn:outgoing>
+    </bpmn:serviceTask>
+    
+    <bpmn:sequenceFlow id="Flow_6" sourceRef="Task_ProcessPayment" targetRef="EndEvent_1" />
+    
+    <bpmn:endEvent id="EndEvent_1" name="Claim Completed">
+      <bpmn:incoming>Flow_6</bpmn:incoming>
+    </bpmn:endEvent>
+    
+    <bpmn:userTask id="Task_RejectClaim" name="Reject Claim" camunda:assignee="rejector">
+      <bpmn:incoming>Flow_Invalid</bpmn:incoming>
+      <bpmn:outgoing>Flow_7</bpmn:outgoing>
+    </bpmn:userTask>
+    
+    <bpmn:sequenceFlow id="Flow_7" sourceRef="Task_RejectClaim" targetRef="EndEvent_2" />
+    
+    <bpmn:endEvent id="EndEvent_2" name="Claim Rejected">
+      <bpmn:incoming>Flow_7</bpmn:incoming>
+    </bpmn:endEvent>
+    
+  </bpmn:process>
+</bpmn:definitions>

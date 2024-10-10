@@ -1,0 +1,12 @@
+D:\Software\Vechical_insurance\src\main\java\com\insurance\claim\delegates\PaymentProcessingDelegate.java
+D:\Software\Vechical_insurance\src\main\java\com\insurance\claim\service\CamundaTaskService.java
+D:\Software\Vechical_insurance\src\main\java\com\insurance\claim\repository\ClaimRepository.java
+D:\Software\Vechical_insurance\src\main\java\com\insurance\claim\repository\PolicyRepository.java
+D:\Software\Vechical_insurance\src\main\java\com\insurance\claim\model\Claim.java
+D:\Software\Vechical_insurance\src\main\java\com\insurance\claim\service\ClaimService.java
+D:\Software\Vechical_insurance\src\main\java\com\insurance\claim\AppConfig.java
+D:\Software\Vechical_insurance\src\main\java\com\insurance\claim\InsuranceApplication.java
+D:\Software\Vechical_insurance\src\main\java\com\insurance\claim\model\Policy.java
+D:\Software\Vechical_insurance\src\main\java\com\insurance\claim\controller\ClaimController.java
+D:\Software\Vechical_insurance\src\main\java\com\insurance\claim\controller\CamundaController.java
+D:\Software\Vechical_insurance\src\main\java\com\insurance\claim\delegates\ClaimValidationDelegate.java

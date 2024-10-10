@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/DMN/20151101/dmn.xsd"
+             id="definitions"
+             name="ClaimValidation"
+             namespace="http://camunda.org/schema/1.0/dmn">
+
+  <decision id="claimDecision" name="Claim Decision">
+    <decisionTable id="decisionTable">
+      <input id="input1" label="Coverage">
+        <inputExpression id="coverageExpression" typeRef="string">
+          <text>coverage</text>
+        </inputExpression>
+      </input>
+      <output id="output1" label="Valid Claim?" typeRef="boolean"/>
+      
+      <rule id="rule1">
+        <inputEntry id="coverageEntry1"><text>"FULL_COVERAGE"</text></inputEntry>
+        <outputEntry id="validOutput1"><text>true</text></outputEntry>
+      </rule>
+      
+      <rule id="rule2">
+        <inputEntry id="coverageEntry2"><text>"PARTIAL_COVERAGE"</text></inputEntry>
+        <outputEntry id="validOutput2"><text>false</text></outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+</definitions>

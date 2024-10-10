@@ -1,0 +1,12 @@
+com\insurance\claim\model\Policy.class
+com\insurance\claim\service\CamundaTaskService.class
+com\insurance\claim\controller\CamundaController.class
+com\insurance\claim\model\Claim.class
+com\insurance\claim\repository\ClaimRepository.class
+com\insurance\claim\InsuranceApplication.class
+com\insurance\claim\delegates\ClaimValidationDelegate.class
+com\insurance\claim\delegates\PaymentProcessingDelegate.class
+com\insurance\claim\service\ClaimService.class
+com\insurance\claim\controller\ClaimController.class
+com\insurance\claim\repository\PolicyRepository.class
+com\insurance\claim\AppConfig.class
